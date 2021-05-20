@@ -73,7 +73,7 @@ default       hello-app   0/1     1            0           14s
 kube-system   coredns     1/1     1            1           21m
 
 ```
-### Publishing resorce to outside
+### Publishing resoгrce to outside
 
 ```shell
 # requred the service type= NodePort :
@@ -85,4 +85,9 @@ service/hello-app exposed
 NAME        TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
 hello-app   NodePort   10.98.149.162   <none>        8080:31044/TCP   58s
 
+# to porward port of the service to localhost 
+>kubectl port-forward service/hello-app 7080:8080
+Forwarding from 127.0.0.1:7080 -> 8080
+Forwarding from [::1]:7080 -> 8080
 ```
+From now we can open link http://localhost:7080
