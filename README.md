@@ -18,6 +18,7 @@ repo_gpgcheck=1
 gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
 EOF
 yum install -y kubectl
+kubectl version
 ```
 Also [VirtualBox](https://kubernetes.io/ru/docs/setup/learning-environment/minikube/#%D1%83%D0%BA%D0%B0%D0%B7%D0%B0%D0%BD%D0%B8%D0%B5-%D0%B4%D1%80%D0%B0%D0%B9%D0%B2%D0%B5%D1%80%D0%B0-%D0%B2%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B9-%D0%BC%D0%B0%D1%88%D0%B8%D0%BD%D1%8B) should be installed
 
@@ -32,5 +33,43 @@ curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/miniku
 
 sudo mkdir -p /usr/local/bin/
 sudo install minikube /usr/local/bin/
+
+# For Checking >minikube start --vm-driver=<driver_name> 
+#driver_name = virtualbox ,vmwarefusion , docker , kvm2 , hyperkit , hyperv 
+
+#to start
+minikube start --vm-driver=virtualbox
+
+minikube status
+#to stop
+
+minikube stop
+#before new start it need to clear local status
+minikube delete
+
+```
+## Operation with K8s
+
+```shell
+>kubectl get pods --all-namespaces
+NAMESPACE     NAME                               READY   STATUS    RESTARTS   AGE
+kube-system   coredns-74ff55c5b-wbssc            1/1     Running   0          17m
+kube-system   etcd-minikube                      1/1     Running   0          17m
+kube-system   kube-apiserver-minikube            1/1     Running   0          17m
+kube-system   kube-controller-manager-minikube   1/1     Running   0          17m
+kube-system   kube-proxy-4lkwq                   1/1     Running   0          17m
+kube-system   kube-scheduler-minikube            1/1     Running   0          17m
+kube-system   storage-provisioner                1/1     Running   1          18m
+```
+### Creating some resouce with minikube
+
+```shell
+>kubectl create deployment hello-app --image=k8s.gcr.io/echoserver:1.4
+deployment.apps/hello-app created
+
+>kubectl get deployments --all-namespaces
+NAMESPACE     NAME        READY   UP-TO-DATE   AVAILABLE   AGE
+default       hello-app   0/1     1            0           14s
+kube-system   coredns     1/1     1            1           21m
 
 ```
