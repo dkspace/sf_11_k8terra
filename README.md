@@ -147,5 +147,13 @@ spec:
 ```
 and appy this deployment file
 ```shell
-kubectl apply -f deployment.yaml
+>kubectl apply -f deployment.yaml
+deployment.apps/nginx-deployment created
+
+#To check the result serch all PODs with filtering by the lable
+>kubectl get pods -l app=nginx
+NAME                                READY   STATUS    RESTARTS   AGE
+nginx-deployment-66b6c48dd5-qp76r   1/1     Running   0          3m26s
+nginx-deployment-66b6c48dd5-t9h44   1/1     Running   0          3m26s
+
 ```
