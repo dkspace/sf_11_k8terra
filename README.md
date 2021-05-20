@@ -73,3 +73,16 @@ default       hello-app   0/1     1            0           14s
 kube-system   coredns     1/1     1            1           21m
 
 ```
+### Publishing resorce to outside
+
+```shell
+# requred the service type= NodePort :
+
+>kubectl expose deployment hello-app --type=NodePort --port=8080
+service/hello-app exposed
+# to check
+>kubectl get services hello-app
+NAME        TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+hello-app   NodePort   10.98.149.162   <none>        8080:31044/TCP   58s
+
+```
