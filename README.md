@@ -90,4 +90,33 @@ hello-app   NodePort   10.98.149.162   <none>        8080:31044/TCP   58s
 Forwarding from 127.0.0.1:7080 -> 8080
 Forwarding from [::1]:7080 -> 8080
 ```
-From now we can open link http://localhost:7080
+From now we can open link http://localhost:7080 and get in the browser responce :
+```
+CLIENT VALUES:
+client_address=127.0.0.1
+command=GET
+real path=/
+query=nil
+request_version=1.1
+request_uri=http://localhost:8080/
+
+SERVER VALUES:
+server_version=nginx: 1.10.0 - lua: 10001
+
+HEADERS RECEIVED:
+accept=text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+accept-encoding=gzip, deflate, br
+accept-language=ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7,pt;q=0.6
+connection=keep-alive
+host=localhost:7080
+sec-ch-ua="Chromium";v="88", "Google Chrome";v="88", ";Not A Brand";v="99"
+sec-ch-ua-mobile=?0
+sec-fetch-dest=document
+sec-fetch-mode=navigate
+sec-fetch-site=cross-site
+sec-fetch-user=?1
+upgrade-insecure-requests=1
+user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36
+BODY:
+-no body in request-
+```
