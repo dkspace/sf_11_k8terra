@@ -194,3 +194,9 @@ nginx-deployment-66b6c48dd5-xj276   0/1     Terminating         0          7s
 (base) [dmik@dkhost sf_module_11]$ 
 
 ```
+
+## resource managment
+
+```
+kubectl run -i --tty --rm busybox --image=busybox --restart=Never --requests='cpu=50m,memory=50Mi' -- sh
+```
