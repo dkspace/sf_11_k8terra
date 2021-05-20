@@ -6,7 +6,7 @@ This is an exercise for DevOps training from [SkillFactory.ru - DEVOPS](https://
 
 ### to install Vagrant
 
-[Install mimikube](https://kubernetes.io/ru/docs/tasks/tools/install-minikube/)
+[Install minikube](https://kubernetes.io/ru/docs/tasks/tools/install-minikube/)
 Use [git hub releases](https://github.com/kubernetes/minikube/releases)
 
 or use :
