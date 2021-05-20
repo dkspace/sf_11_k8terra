@@ -205,7 +205,10 @@ If you don't see a command prompt, try pressing enter.
 # but trainer not experienced with this command ^^ 
 ```
 [Managing Resources for Containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/)
+
 [Configure Minimum and Maximum CPU Constraints for a Namespace](https://kubernetes.io/docs/tasks/administer-cluster/manage-resources/cpu-constraint-namespace/)
+
+[Задание ресурсов CPU для контейнеров и Pod'ов](https://kubernetes.io/ru/docs/tasks/configure-pod-container/assign-cpu-resource/)
 
 #### Create a namespace so that the resources you create in this exercise are isolated from the rest of your cluster.
 ```shell
