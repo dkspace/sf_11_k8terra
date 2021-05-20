@@ -1,4 +1,4 @@
-# Kubernetas as orchestrator
+# Kubernetas = orchestrator
 
 This is an exercise for DevOps training from [SkillFactory.ru - DEVOPS](https://lms.skillfactory.ru/)
 
