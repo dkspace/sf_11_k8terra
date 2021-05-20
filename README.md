@@ -197,6 +197,61 @@ nginx-deployment-66b6c48dd5-xj276   0/1     Terminating         0          7s
 
 ## resource managment
 
+```shell
+>kubectl run -i --tty --rm busybox --image=busybox --restart=Never --requests='cpu=50m,memory=50Mi' -- sh
+Flag --requests has been deprecated, has no effect and will be removed in the future.
+If you don't see a command prompt, try pressing enter.
+
+# but trainer not experienced with this command ^^ 
 ```
-kubectl run -i --tty --rm busybox --image=busybox --restart=Never --requests='cpu=50m,memory=50Mi' -- sh
+[Managing Resources for Containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/)
+[Configure Minimum and Maximum CPU Constraints for a Namespace](https://kubernetes.io/docs/tasks/administer-cluster/manage-resources/cpu-constraint-namespace/)
+
+#### Create a namespace so that the resources you create in this exercise are isolated from the rest of your cluster.
+```shell
+>kubectl create namespace constraints-cpu-example
 ```
+#### Create cpu-request-limit.yaml
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: demo
+spec:
+  containers:
+  - name: busybox        
+    image: busybox
+    resources:
+      requests:
+        memory: "50Mi"
+        cpu: "50m"
+```
+```shell
+>kubectl apply -f cpu-request-limit.yaml --namespace=constraints-cpu-example
+pod/demo created
+
+>kubectl get pod busybox --output=yaml --namespace=constraints-cpu-example
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"Pod","metadata":{"annotations":{},"name":"demo","namespace":"constraints-cpu-example"},"spec":{"containers":[{"image":"busybox","name":"busybox","resources":{"requests":{"cpu":"50m","memory":"50Mi"}}}]}}
+  creationTimestamp: "2021-05-20T23:34:31Z"
+  name: demo
+  namespace: constraints-cpu-example
+  resourceVersion: "3088"
+  uid: 6beafd85-ad55-4510-914b-27279cc9a35c
+spec:
+  containers:
+  - image: busybox
+    imagePullPolicy: Always
+    name: busybox
+    resources:
+      requests:
+        cpu: 50m
+        memory: 50Mi
+...
+
+```
+
