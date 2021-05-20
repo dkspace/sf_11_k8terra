@@ -120,3 +120,32 @@ user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko
 BODY:
 -no body in request-
 ```
+## To deploy nginx into cluster using yaml file
+
+Create deployment.yaml which describes this deployment
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: 2 # мы создадим 2 реплики nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+```
+and appy this deployment file
+```shell
+kubectl apply -f deployment.yaml
+```
