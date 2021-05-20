@@ -157,3 +157,40 @@ nginx-deployment-66b6c48dd5-qp76r   1/1     Running   0          3m26s
 nginx-deployment-66b6c48dd5-t9h44   1/1     Running   0          3m26s
 
 ```
+### update deployment.yaml
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: 4 # Меняем количество реплик
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.16.1 # Меняем версию образа
+        ports:
+        - containerPort: 80
+```
+
+```shell
+>kubectl apply -f deployment.yaml
+deployment.apps/nginx-deployment configured
+>kubectl get pods -l app=nginx
+NAME                                READY   STATUS              RESTARTS   AGE
+nginx-deployment-559d658b74-dvj2j   0/1     ContainerCreating   0          7s
+nginx-deployment-559d658b74-sfndq   0/1     ContainerCreating   0          7s
+nginx-deployment-66b6c48dd5-lks8c   1/1     Running             0          7s
+nginx-deployment-66b6c48dd5-qp76r   1/1     Running             0          6m32s
+nginx-deployment-66b6c48dd5-t9h44   1/1     Running             0          6m32s
+nginx-deployment-66b6c48dd5-xj276   0/1     Terminating         0          7s
+(base) [dmik@dkhost sf_module_11]$ 
+
+```
