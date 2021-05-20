@@ -48,8 +48,8 @@ minikube stop
 minikube delete
 
 ```
-## Operation with K8s
-
+## Operation with K8s 
+[k8s cheatcheet](https://kubernetes.io/ru/docs/reference/kubectl/cheatsheet/)
 ```shell
 >kubectl get pods --all-namespaces
 NAMESPACE     NAME                               READY   STATUS    RESTARTS   AGE
