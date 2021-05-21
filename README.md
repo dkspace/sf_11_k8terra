@@ -210,6 +210,15 @@ If you don't see a command prompt, try pressing enter.
 
 [Задание ресурсов CPU для контейнеров и Pod'ов](https://kubernetes.io/ru/docs/tasks/configure-pod-container/assign-cpu-resource/)
 
+#### Launch server of metrics for Minikube
+```shell
+>minikube addons enable metrics-server
+# check result
+>kubectl get apiservices | grep metrics.k8s.io
+v1beta1.metrics.k8s.io                 kube-system/metrics-server   True        3m24s
+
+```
+
 #### Create a namespace so that the resources you create in this exercise are isolated from the rest of your cluster.
 ```shell
 >kubectl create namespace constraints-cpu-example
@@ -256,5 +265,11 @@ spec:
         memory: 50Mi
 ...
 
+
+ubectl get pods --all-namespaces
+kubectl get pods --namespace=constraints-cpu-example
+kubectl delete pods demo --namespace=constraints-cpu-example
+kubectl apply -f cpu-request-limit.yaml --namespace=constraints-cpu-example
+kubectl exec -it demo -- /bin/bash
 ```
 
