@@ -657,13 +657,12 @@ internal_ip_address_vm_2 = "192.168.10.6"
 ```
 ```sell
 >yc compute instance list
-+----------------------+------------+---------------+---------+-----------------+---------------+
-|          ID          |    NAME    |    ZONE ID    | STATUS  |   EXTERNAL IP   |  INTERNAL IP  |
-+----------------------+------------+---------------+---------+-----------------+---------------+
-| epdf9vld1ugohgr250hl | dkhost     | ru-central1-b | STOPPED |                 | 10.129.0.20   |
-| fhmgsk5io9q61lotsogp | terraform2 | ru-central1-a | RUNNING | 178.154.202.197 | 192.168.10.6  |
-| fhmhbsrv2plide4a0h1v | terraform1 | ru-central1-a | RUNNING | 178.154.246.192 | 192.168.10.17 |
-+----------------------+------------+---------------+---------+-----------------+---------------+
++----------------------+------------+---------------+---------+----------------+---------------+
+|          ID          |    NAME    |    ZONE ID    | STATUS  |  EXTERNAL IP   |  INTERNAL IP  |
++----------------------+------------+---------------+---------+----------------+---------------+
+| fhmlmpfe9amtmjb96r3b | terraform1 | ru-central1-a | RUNNING | 178.154.202.75 | 192.168.10.30 |
+| fhms655s1ud3iil9o3kf | terraform2 | ru-central1-a | RUNNING | 178.154.201.72 | 192.168.10.11 |
++----------------------+------------+---------------+---------+----------------+---------------+
 >ssh dmik@178.154.202.197
 >ssh dmik@178.154.246.192
 ```
@@ -774,7 +773,37 @@ kube-system   kube-proxy-422f4                               1/1     Running   0
 kube-system   kube-scheduler-fhmlmpfe9amtmjb96r3b            1/1     Running   0          14m
 
 ```
+### on Worker Node - adding to cluster
+```shell 
+>kubeadm join 192.168.10.30:6443 --token 0rh9ri.9k1fvsb15b8hfa9q --discovery-token-ca-cert-hash sha256:bbd924527e1a1953aaeef7590e04d107cb1a073606ba76f05bb06f44c8afd109 
+[preflight] Running pre-flight checks
+	[WARNING IsDockerSystemdCheck]: detected "cgroupfs" as the Docker cgroup driver. The recommended driver is "systemd". Please follow the guide at https://kubernetes.io/docs/setup/cri/
+[preflight] Reading configuration from the cluster...
+[preflight] FYI: You can look at this config file with 'kubectl -n kube-system get cm kubeadm-config -o yaml'
+[kubelet-start] Writing kubelet configuration to file "/var/lib/kubelet/config.yaml"
+[kubelet-start] Writing kubelet environment file with flags to file "/var/lib/kubelet/kubeadm-flags.env"
+[kubelet-start] Starting the kubelet
+[kubelet-start] Waiting for the kubelet to perform the TLS Bootstrap...
 
+This node has joined the cluster:
+* Certificate signing request was sent to apiserver and a response was received.
+* The Kubelet was informed of the new secure connection details.
 
-
+Run 'kubectl get nodes' on the control-plane to see this node join the cluster.
+```
+### Checking Master node status
+```shell
+dmik@fhmlmpfe9amtmjb96r3b:~$ kubectl get nodes
+NAME                   STATUS     ROLES                  AGE     VERSION
+fhmlmpfe9amtmjb96r3b   NotReady   control-plane,master   22m     v1.21.1
+fhms655s1ud3iil9o3kf   NotReady   <none>                 2m46s   v1.21.1
+dmik@fhmlmpfe9amtmjb96r3b:~$ 
+```
+##
+```shell
+# on Master node
+sudo cp /etc/kubernetes/admin.conf /home/dmik/
+# on local host to get admin.conf from Master Node to local host
+scp dmik@178.154.202.75:/home/dmik/admin.conf /home/dmik/.kube/
+```
 
