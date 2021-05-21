@@ -333,7 +333,7 @@ CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS   
 
 [compute_instance parameter description](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/compute_instance)
 
- yc init
+    yc init
 
 ```shell 
 main.tf
@@ -673,5 +673,108 @@ internal_ip_address_vm_2 = "192.168.10.6"
 [Creating a cluster with kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/)
 
 ```shell
+>sudo modprobe br_netfilter
+>sudo vi /etc/sysctl.conf
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+net.ipv4.ip_forward = 1
+
+>sudo sysctl -p
+```
+### Install containerd: Docker Engine on Debian
+[install-using-the-convenience-script](https://docs.docker.com/engine/install/debian/#install-using-the-convenience-script)
+
+```shell
+cat <<EOF | sudo tee /etc/modules-load.d/containerd.conf
+overlay
+br_netfilter
+EOF
+
+sudo modprobe overlay
+sudo modprobe br_netfilter
+
+# Setup required sysctl params, these persist across reboots.
+cat <<EOF | sudo tee /etc/sysctl.d/99-kubernetes-cri.conf
+net.bridge.bridge-nf-call-iptables  = 1
+net.ipv4.ip_forward                 = 1
+net.bridge.bridge-nf-call-ip6tables = 1
+EOF
+
+# Apply sysctl params without reboot
+sudo sysctl --system
+
+# Install
+
+>curl -fsSL https://get.docker.com -o get-docker.sh
+>sudo sh get-docker.sh
+>docker -v
+
+sudo groupadd docker
+sudo usermod -aG docker $USER
+sudo newgrp docker
+#check use docker w/o sudo
+>docker run hello-world
+#in case problem use https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user
+sudo chown "$USER":"$USER" /home/"$USER"/.docker -R
+sudo chmod g+rwx "$HOME/.docker" -R
+sudo systemctl enable docker.service
+sudo systemctl enable containerd.service
+
+#configure containerd
+sudo mkdir -p /etc/containerd
+sudo systemctl restart containerd
+```
+### Installing kubeadm, kubelet and kubectl
+
+```shell
+sudo apt-get update
+sudo apt-get install -y apt-transport-https ca-certificates curl
+sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
+echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+sudo apt-get update
+sudo apt-get install -y kubelet kubeadm kubectl
+sudo apt-mark hold kubelet kubeadm kubectl
+```
+```shell
+>kubeadm init
+[init] Using Kubernetes version: v1.21.1
+[preflight] Running pre-flight checks
+	[WARNING IsDockerSystemdCheck]: detected "cgroupfs" as the Docker cgroup driver. The recommended driver is "systemd". Please follow the guide at h
+
+Your Kubernetes control-plane has initialized successfully!
+
+To start using your cluster, you need to run the following as a regular user:
+
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+Alternatively, if you are the root user, you can run:
+
+  export KUBECONFIG=/etc/kubernetes/admin.conf
+
+You should now deploy a pod network to the cluster.
+Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
+  https://kubernetes.io/docs/concepts/cluster-administration/addons/
+
+Then you can join any number of worker nodes by running the following on each as root:
+
+kubeadm join 192.168.10.30:6443 --token 0rh9ri.9k1fvsb15b8hfa9q \
+	--discovery-token-ca-cert-hash sha256:bbd924527e1a1953aaeef7590e04d107cb1a073606ba76f05bb06f44c8afd109 
+
+>kubectl get pods --all-namespaces
+NAMESPACE     NAME                                           READY   STATUS    RESTARTS   AGE
+kube-system   coredns-558bd4d5db-2st7h                       0/1     Pending   0          14m
+kube-system   coredns-558bd4d5db-vff76                       0/1     Pending   0          14m
+kube-system   etcd-fhmlmpfe9amtmjb96r3b                      1/1     Running   0          14m
+kube-system   kube-apiserver-fhmlmpfe9amtmjb96r3b            1/1     Running   0          14m
+kube-system   kube-controller-manager-fhmlmpfe9amtmjb96r3b   1/1     Running   0          14m
+kube-system   kube-proxy-422f4                               1/1     Running   0          14m
+kube-system   kube-scheduler-fhmlmpfe9amtmjb96r3b            1/1     Running   0          14m
 
 ```
+
+
+
+
