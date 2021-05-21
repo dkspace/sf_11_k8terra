@@ -662,7 +662,8 @@ internal_ip_address_vm_2 = "192.168.10.6"
 | fhmgsk5io9q61lotsogp | terraform2 | ru-central1-a | RUNNING | 178.154.202.197 | 192.168.10.6  |
 | fhmhbsrv2plide4a0h1v | terraform1 | ru-central1-a | RUNNING | 178.154.246.192 | 192.168.10.17 |
 +----------------------+------------+---------------+---------+-----------------+---------------+
-
+>ssh dmik@178.154.202.197
+>ssh dmik@178.154.246.192
 ```
 ### Kuberadm to create cluster
 [Installing kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/)
