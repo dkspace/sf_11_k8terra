@@ -320,4 +320,8 @@ resource "docker_container" "nginx" {
 CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS         PORTS                  NAMES
 028298c44207   7ce4f91ef623   "/docker-entrypoint.…"   5 minutes ago   Up 5 minutes   0.0.0.0:8000->80/tcp   tutorial
 
+# to delete all applied  
+>terraform destroy
+>yes
+
 ```
