@@ -670,4 +670,6 @@ internal_ip_address_vm_2 = "192.168.10.6"
 
 [Creating a cluster with kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/)
 
+```shell
 
+```
