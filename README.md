@@ -331,7 +331,9 @@ CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS   
 
 [YandexCloud CLI](https://cloud.yandex.ru/docs/cli/quickstart)
 
-  yc init
+[compute_instance parameter description](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/compute_instance)
+
+ yc init
 
 ```shell 
 main.tf
