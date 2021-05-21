@@ -328,7 +328,9 @@ CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS   
 # Practicum
 ## Yandex Cloud 
 [Начало работы с Terraform](https://cloud.yandex.ru/docs/solutions/infrastructure-management/terraform-quickstart#check-resources)
+
 [YandexCloud CLI](https://cloud.yandex.ru/docs/cli/quickstart)
+
   yc init
 
 ```shell 
@@ -640,3 +642,9 @@ internal_ip_address_vm_2 = "192.168.10.6"
 +----------------------+------------+---------------+---------+-----------------+---------------+
 
 ```
+### Kuberadm to create cluster
+[Installing kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/)
+
+[Creating a cluster with kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/)
+
+
