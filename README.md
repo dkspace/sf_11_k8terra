@@ -273,3 +273,44 @@ kubectl apply -f cpu-request-limit.yaml --namespace=constraints-cpu-example
 kubectl exec -it demo -- /bin/bash
 ```
 
+## How To instal Terraform 
+[Install Terraform] (https://learn.hashicorp.com/tutorials/terraform/install-cli)
+```shell
+sudo yum install -y yum-utils
+yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+yum -y install terraform
+```
+### How To use Terraform
+
+```shell
+mkdir terraform-docker-demo && cd $_
+touch main.tf
+
+cat main.tf
+terraform {
+  required_providers {
+    docker = {
+      source = "kreuzwerker/docker"
+    }
+  }
+}
+
+provider "docker" {}
+
+resource "docker_image" "nginx" {
+  name         = "nginx:latest"
+  keep_locally = false
+}
+
+resource "docker_container" "nginx" {
+  image = docker_image.nginx.latest
+  name  = "tutorial"
+  ports {
+    internal = 80
+    external = 8000
+  }
+}
+
+
+>terraform init
+```
