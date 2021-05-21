@@ -629,4 +629,14 @@ internal_ip_address_vm_1 = "192.168.10.17"
 internal_ip_address_vm_2 = "192.168.10.6"
 
 ```
+```sell
+>yc compute instance list
++----------------------+------------+---------------+---------+-----------------+---------------+
+|          ID          |    NAME    |    ZONE ID    | STATUS  |   EXTERNAL IP   |  INTERNAL IP  |
++----------------------+------------+---------------+---------+-----------------+---------------+
+| epdf9vld1ugohgr250hl | dkhost     | ru-central1-b | STOPPED |                 | 10.129.0.20   |
+| fhmgsk5io9q61lotsogp | terraform2 | ru-central1-a | RUNNING | 178.154.202.197 | 192.168.10.6  |
+| fhmhbsrv2plide4a0h1v | terraform1 | ru-central1-a | RUNNING | 178.154.246.192 | 192.168.10.17 |
++----------------------+------------+---------------+---------+-----------------+---------------+
 
+```
