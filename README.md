@@ -363,6 +363,7 @@ resource "yandex_compute_instance" "vm-1" {
   boot_disk {
     initialize_params {
       image_id = "fd87va5cc00gaq2f5qfb"
+      size = 4
     }
   }
 
@@ -388,6 +389,7 @@ resource "yandex_compute_instance" "vm-2" {
   boot_disk {
     initialize_params {
       image_id = "fd87va5cc00gaq2f5qfb"
+      size = 4
     }
   }
 
@@ -799,11 +801,14 @@ fhmlmpfe9amtmjb96r3b   NotReady   control-plane,master   22m     v1.21.1
 fhms655s1ud3iil9o3kf   NotReady   <none>                 2m46s   v1.21.1
 dmik@fhmlmpfe9amtmjb96r3b:~$ 
 ```
-##
+## Kubernetes dashboard
 ```shell
 # on Master node
 sudo cp /etc/kubernetes/admin.conf /home/dmik/
 # on local host to get admin.conf from Master Node to local host
 scp dmik@178.154.202.75:/home/dmik/admin.conf /home/dmik/.kube/
+
+>kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml
+
 ```
 
