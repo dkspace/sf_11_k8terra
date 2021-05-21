@@ -370,7 +370,8 @@ resource "yandex_compute_instance" "vm-1" {
   }
 
   metadata = {
-    ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
+    #    ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
+    user-data = "${file("~/sf_module_11/yandexCloud/meta1.txt")}"
   }
 }
 
@@ -394,7 +395,8 @@ resource "yandex_compute_instance" "vm-2" {
   }
 
   metadata = {
-    ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
+    #    ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
+    user-data = "${file("~/sf_module_11/yandexCloud/meta2.txt")}"
   }
 }
 
@@ -425,6 +427,28 @@ output "external_ip_address_vm_1" {
 output "external_ip_address_vm_2" {
   value = yandex_compute_instance.vm-2.network_interface.0.nat_ip_address
 }
+
+#Create meta.txt
+----------------------------------------------------------
+#cloud-config
+users:
+  - name: <имя пользователя>
+    groups: sudo
+    shell: /bin/bash
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    ssh-authorized-keys:
+      - ssh-rsa AAAAB3Nza......OjbSMRX user@example.com
+      - ssh-rsa AAAAB3Nza......Pu00jRN user@desktop
+----------------------------------------------------------      
+In main.tf change ssh-keys with user-data 
+
+metadata = {
+    user-data = "${file("<путь к файлу>/meta.txt")}"
+}
+
+```
+
+```shell
 >terraform init
 >terraform validate
 >terraform fmt
@@ -432,9 +456,7 @@ output "external_ip_address_vm_2" {
 main.tf
 variables.tf
 >terraform plan
-```
 
-```shell
 >terraform apply
 
 Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
