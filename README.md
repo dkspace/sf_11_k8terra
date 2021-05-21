@@ -313,4 +313,6 @@ resource "docker_container" "nginx" {
 
 
 >terraform init
+>terraform apply
+>yes
 ```
