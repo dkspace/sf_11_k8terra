@@ -315,4 +315,9 @@ resource "docker_container" "nginx" {
 >terraform init
 >terraform apply
 >yes
+
+>docker ps
+CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS         PORTS                  NAMES
+028298c44207   7ce4f91ef623   "/docker-entrypoint.…"   5 minutes ago   Up 5 minutes   0.0.0.0:8000->80/tcp   tutorial
+
 ```
