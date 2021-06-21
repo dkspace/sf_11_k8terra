@@ -274,7 +274,7 @@ kubectl exec -it demo -- /bin/bash
 ```
 
 ## How To instal Terraform 
-[Install Terraform] (https://learn.hashicorp.com/tutorials/terraform/install-cli)
+[Install Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli)
 ```shell
 sudo yum install -y yum-utils
 yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
